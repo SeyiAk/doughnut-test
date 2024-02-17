@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #doughnut-container {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      top: 10%;
+      left: 5%;
+    }
+
+    .doughnut-chart {
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    .bg-circle {
+      stroke-width: 20px; 
+      stroke: #ffffff; 
+    }
+
+    .data1-circle {
+      stroke-width: 20px; 
+      stroke: #808080; 
+    }
+
+    .data2-circle {
+      stroke-width: 20px; 
+      stroke: #f9b87a; 
+    }
+  </style>
+</head>
+<body>
+
+<div id="doughnut-container"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const data1 = 70; 
+    const data2 = 30; 
+    const size = 200; 
+    const strokeWidth = 20; 
+
+    const radius = size / 2;
+    const circumference = 2 * Math.PI * radius;
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", size);
+    svg.setAttribute("height", size);
+    svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+
+    // Background circle
+    const bgCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    bgCircle.setAttribute("class", "doughnut-chart bg-circle");
+    bgCircle.setAttribute("cx", radius);
+    bgCircle.setAttribute("cy", radius);
+    bgCircle.setAttribute("r", radius - strokeWidth / 2);
+    bgCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+    svg.appendChild(bgCircle);
+
+    // First data portion circle (grey)
+    const data1Circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    data1Circle.setAttribute("class", "doughnut-chart data1-circle");
+    data1Circle.setAttribute("cx", radius);
+    data1Circle.setAttribute("cy", radius);
+    data1Circle.setAttribute("r", radius - strokeWidth / 2);
+    data1Circle.style.strokeDasharray = `${(data1 / 100) * circumference} ${circumference}`;
+    svg.appendChild(data1Circle);
+
+    // Second data portion circle (orange)
+    const data2Circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    data2Circle.setAttribute("class", "doughnut-chart data2-circle");
+    data2Circle.setAttribute("cx", radius);
+    data2Circle.setAttribute("cy", radius);
+    data2Circle.setAttribute("r", radius - strokeWidth / 2);
+    data2Circle.style.strokeDasharray = `${(data2 / 100) * circumference} ${circumference}`;
+    svg.appendChild(data2Circle);
+
+    document.getElementById("doughnut-container").appendChild(svg);
+  });
+</script>
+
+</body>
+</html>
